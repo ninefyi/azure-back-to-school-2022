@@ -1,0 +1,25 @@
+name: Daily_midnight_software_updates_$(Date:yyyyMMdd).$(Rev:r)
+
+schedules:
+  - cron: "0 3 * * *"
+    displayName: Daily midnight run
+    branches:
+      include:
+      - main
+    always: true
+
+trigger: none
+pr: none
+
+pool:
+  name: Default
+  demands:
+   - agent.name -equals agent01
+
+steps:
+  - task: PowerShell@2
+    displayName: 'Run windows update.'
+    inputs:
+      targetType: filePath
+      filePath: './ws.ps1'
+      pwsh: true
