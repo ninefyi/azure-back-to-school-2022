@@ -1,5 +1,5 @@
 # Introduction 
-TODO: How to create pipeline to update the new software on self-hosted azure agent. 
+TODO: How to a create pipeline to update the new software on self-hosted azure agent. 
 
 ## Reference
 - How to install [self-hosted azure agent](https://docs.microsoft.com/en-us/azure/devops/pipelines/agents/v2-windows?view=azure-devops)
