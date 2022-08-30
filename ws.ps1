@@ -5,14 +5,14 @@ Install-Module PSWindowsUpdate
 Write-Host "2. Verify PSWindowsUpdate module"
 Get-InstalledModule -Name PSWindowsUpdate
 Write-Host "3. Get windows update list"
-Get-WindowsUpdate
 
-$wus = Get-WindowsUpdate
+$wus = Get-WindowsUpdate | ForEach-Object { $_ | Select-Object Title }
 $content = "Nothig to install"
 
-if($wus != $null) {
+if($null -ne $wus) {
     
     foreach($w in $wus){
+        Write-Host $w.Title
         $w.Title | Out-File "./$fileName" -Append
     }
 
