@@ -6,16 +6,25 @@ Write-Host "2. Verify PSWindowsUpdate module"
 Get-InstalledModule -Name PSWindowsUpdate
 Write-Host "3. Get windows update list"
 Get-WindowsUpdate
-Write-Host "4. Install windows update list"
-Install-WindowsUpdate -AcceptAll | Out-File "./$fileName"
 
-$content = Get-Content -Path "./$fileName"
+$wus = Get-WindowsUpdate
+$content = "Nothig to install"
 
-if([string]::IsNullOrEmpty($content)){
-    $content = "Nothing to update!"    
-}else{
-    $content = $content.Replace("`n","<br/>")
+if($wus != $null) {
+    
+    foreach($w in $wus){
+        $w.Title | Out-File "./$fileName" -Append
+    }
+
+    $content = Get-Content -Path "./$fileName" -Raw
+
+    if(!([string]::IsNullOrEmpty($content))){
+        $content = $content.Replace("`n","<br/>")
+    }
 }
+
+Write-Host "4. Install windows update list"
+Install-WindowsUpdate -AcceptAll
 
 $body = @{
     "@type" = "MessageCard"
